@@ -1,3 +1,4 @@
+import 'package:blog_app_crud/PostDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
@@ -21,6 +22,16 @@ class _HomeState extends State<Home> {
       });
     });
     super.initState();
+  }
+
+  passData(DocumentSnapshot snap) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => postDetails(
+          snapshot: snap,
+        ),
+      ),
+    );
   }
 
   @override
@@ -132,11 +143,16 @@ class _HomeState extends State<Home> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                new Text(
-                                  snapshot[index].data()['title'],
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      fontSize: 22.0, color: Colors.green),
+                                InkWell(
+                                  child: new Text(
+                                    snapshot[index].data()['title'],
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        fontSize: 22.0, color: Colors.green),
+                                  ),
+                                  onTap: () {
+                                    passData(snapshot[index]);
+                                  },
                                 ),
                                 new SizedBox(
                                   height: 5.0,
